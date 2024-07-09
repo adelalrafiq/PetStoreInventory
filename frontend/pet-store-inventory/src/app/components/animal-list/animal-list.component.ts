@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Animal } from '../../models/animal';
+import { leadingComment } from '@angular/compiler';
 
 @Component({
   selector: 'app-animal-list',
@@ -31,7 +32,9 @@ export class AnimalListComponent implements OnInit {
     localStorage.setItem('animals', JSON.stringify(this.animals));
   }
 
-  editAnimal(animal: Animal) {    
+  editAnimal(animal: Animal) {  
+    console.log(animal);
+    
     this.router.navigateByUrl(`animals/edit/${animal.id}`);
   }
 
