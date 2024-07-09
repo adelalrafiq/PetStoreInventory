@@ -26,26 +26,20 @@ export class AnimalAddComponent {
     beschrijving: ''
   };
 
-  addAnimal() {     
+  editing: boolean = false;
+
+  addNewAnimal() {     
     // Generate a new UUID for the animal
     this.newAnimal.id = uuidv4();
 
     // Save the new animal to localStorage
-    this.saveAnimalToLocalStorage(this.newAnimal);
-    
-    // Reset the form fields
-    this.newAnimal = {
-      id: '', // Reset ID
-      naam: '',
-      diersoort: '',
-      leeftijd: 0,
-      prijs: 0,
-      geslacht: '',
-      aantalInVoorraad: 0,
-      beschrijving: ''
-    };
+    this.saveAnimalToLocalStorage(this.newAnimal); 
 
     // Navigate to the list page
+    this.router.navigateByUrl('/animals');
+  }
+
+  cancel(){
     this.router.navigateByUrl('/animals');
   }
 
