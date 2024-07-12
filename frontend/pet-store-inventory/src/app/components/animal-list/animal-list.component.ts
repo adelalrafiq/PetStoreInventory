@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Animal } from '../../models/animal';
-import { leadingComment } from '@angular/compiler';
+import { AnimalChartComponent } from '../animal-chart/animal-chart.component';
 
 @Component({
   selector: 'app-animal-list',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule,AnimalChartComponent],
   templateUrl: './animal-list.component.html',
   styleUrl: './animal-list.component.css'
 })
@@ -32,9 +32,7 @@ export class AnimalListComponent implements OnInit {
     localStorage.setItem('animals', JSON.stringify(this.animals));
   }
 
-  editAnimal(animal: Animal) {  
-    console.log(animal);
-    
+  editAnimal(animal: Animal) {      
     this.router.navigateByUrl(`animals/edit/${animal.id}`);
   }
 
@@ -42,5 +40,9 @@ export class AnimalListComponent implements OnInit {
     const index = this.animals.findIndex(a => a.id === animal.id);
     this.animals.splice(index,1);
     this.updateLocalStorage();   
+  }
+
+  chartAnimal(){
+    this.router.navigateByUrl(`animals/chart`);
   }
 }
