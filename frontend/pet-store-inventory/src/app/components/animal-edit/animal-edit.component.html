@@ -1,51 +1,60 @@
 <div class="p-4" *ngIf="animal">
-    <div class="p-4">
-        <h2 class="text-2xl font-semibold mb-4">Bijwerken Huidig Dier</h2>
-        
-        <div class="mb-4">
-          <label for="naam" class="block text-sm font-medium text-gray-700">Naam</label>
-          <input type="text" id="naam" name="naam" placeholder="Naam van het dier" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" [(ngModel)]="animal.naam" />
-        </div>
-        
-        <div class="mb-4">
-          <label for="diersoort" class="block text-sm font-medium text-gray-700">Diersoort</label>
-          <input type="text" id="diersoort" name="diersoort" placeholder="Diersoort" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" [(ngModel)]="animal.diersoort" />
-        </div>
-        
-        <div class="mb-4">
-          <label for="leeftijd" class="block text-sm font-medium text-gray-700">Leeftijd</label>
-          <input type="number" id="leeftijd" name="leeftijd" placeholder="Leeftijd" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" [(ngModel)]="animal.leeftijd" />
-        </div>
-        
-        <div class="mb-4">
-          <label for="prijs" class="block text-sm font-medium text-gray-700">Prijs</label>
-          <input type="number" id="prijs" name="prijs" placeholder="Prijs in euro" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" [(ngModel)]="animal.prijs" />
-        </div>
-        
-        <div class="mb-4">
-          <label for="geslacht" class="block text-sm font-medium text-gray-700">Geslacht</label>
-          <select id="geslacht" name="geslacht" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" [(ngModel)]="animal.geslacht">
-            <option value="Mannelijk">Mannelijk</option>
-            <option value="Vrouwelijk">Vrouwelijk</option>
-            <option value="Onbekend">Onbekend</option>
-          </select>
-        </div>
-        
-        <div class="mb-4">
-          <label for="aantalInVoorraad" class="block text-sm font-medium text-gray-700">Aantal in voorraad</label>
-          <input type="number" id="aantalInVoorraad" name="aantalInVoorraad" placeholder="Aantal in voorraad" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" [(ngModel)]="animal.aantalInVoorraad" />
-        </div>
-        
-        <div class="mb-4">
-          <label for="beschrijving" class="block text-sm font-medium text-gray-700">Beschrijving</label>
-          <textarea id="beschrijving" name="beschrijving" rows="3" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" [(ngModel)]="animal.beschrijving"></textarea>
-        </div>
-        <div class="flex justify-end space-x-2">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded-l-md hover:bg-blue-600 focus:outline-none" (click)="updateAnimal()">Bijwerken</button>
-            <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-r-md hover:bg-gray-600 focus:outline-none" (click)="cancel()">Annuleren</button>
-          </div>     
-      </div>
+  <div class="p-4">
+    <h2 class="text-2xl font-semibold mb-4">Bijwerken Huidig Dier</h2>
+
+    <div class="mb-4">
+      <label for="naam" class="block text-sm font-medium text-gray-700">Naam</label>
+      <input type="text" id="naam" name="naam" placeholder="Naam van het dier"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        [(ngModel)]="animal.naam" />
+    </div>
+
+    <div class="mb-4">
+      <label for="diersoort" class="block text-sm font-medium text-gray-700">Diersoort</label>
+      <input type="text" id="diersoort" name="diersoort" placeholder="Diersoort"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        [(ngModel)]="animal.diersoort" />
+    </div>
+
+    <div class="mb-4">
+      <label for="leeftijd" class="block text-sm font-medium text-gray-700">Leeftijd</label>
+      <input type="number" id="leeftijd" name="leeftijd" placeholder="Leeftijd"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        [(ngModel)]="animal.leeftijd" />
+    </div>
+
+    <div class="mb-4">
+      <label for="prijs" class="block text-sm font-medium text-gray-700">Prijs</label>
+      <input type="number" id="prijs" name="prijs" placeholder="Prijs in euro"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        [(ngModel)]="animal.prijs" />
+    </div>
+
+    <div class="mb-4">
+      <label for="geslacht" class="block text-sm font-medium text-gray-700">Geslacht</label>
+      <select id="geslacht" name="geslacht"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        [(ngModel)]="animal.geslacht">
+        <option value="Mannelijk">Mannelijk</option>
+        <option value="Vrouwelijk">Vrouwelijk</option>
+        <option value="Onbekend">Onbekend</option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label for="beschrijving" class="block text-sm font-medium text-gray-700">Beschrijving</label>
+      <textarea id="beschrijving" name="beschrijving" rows="3"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        [(ngModel)]="animal.beschrijving"></textarea>
+    </div>
+    <div class="flex justify-end space-x-2">
+      <button class="bg-blue-500 text-white px-4 py-2 rounded-l-md hover:bg-blue-600 focus:outline-none"
+        (click)="updateAnimal()">Bijwerken</button>
+      <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-r-md hover:bg-gray-600 focus:outline-none"
+        (click)="cancel()">Annuleren</button>
+    </div>
   </div>
-  <div *ngIf="!animal">
-    <p>Dier niet gevonden.</p>
-  </div>
+</div>
+<div *ngIf="!animal">
+  <p>Dier niet gevonden.</p>
+</div>

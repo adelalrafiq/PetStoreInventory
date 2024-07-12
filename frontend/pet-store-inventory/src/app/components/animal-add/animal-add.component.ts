@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Animal } from '../../models/animal';
 import { v4 as uuidv4 } from 'uuid';
-import {  FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-animal-add',
@@ -22,24 +22,23 @@ export class AnimalAddComponent {
     leeftijd: 0,
     prijs: 0,
     geslacht: '',
-    aantalInVoorraad: 0,
     beschrijving: ''
   };
 
   editing: boolean = false;
 
-  addNewAnimal() {     
+  addNewAnimal() {
     // Generate a new UUID for the animal
     this.newAnimal.id = uuidv4();
 
     // Save the new animal to localStorage
-    this.saveAnimalToLocalStorage(this.newAnimal); 
+    this.saveAnimalToLocalStorage(this.newAnimal);
 
     // Navigate to the list page
     this.router.navigateByUrl('/animals');
   }
 
-  cancel(){
+  cancel() {
     this.router.navigateByUrl('/animals');
   }
 
