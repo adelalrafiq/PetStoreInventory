@@ -24,15 +24,15 @@ export class AnimalChartComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions!: CustomChartOptions;
 
-  
-  ngOnInit(): void { 
-   this.loadChartData();
+
+  ngOnInit(): void {
+    this.loadChartData();
   }
 
   loadChartData(): void {
     // Haal de gegevens uit localStorage
     const animals = JSON.parse(localStorage.getItem('animals') || '[]');
-    
+
     // Als er geen dieren zijn opgeslagen, stop dan
     if (animals.length === 0) {
       return;
@@ -40,33 +40,33 @@ export class AnimalChartComponent implements OnInit {
     const speciesCounts = this.countSpecies(animals);
     this.chartOptions = {
       chart: {
-        type: 'pie',  
-        custom: {},                 
-        events: {         
-          render(){
-            const chart = this as Highcharts.Chart & {options:CustomChartOptions},          
-            series = chart.series[0];
-            if(!chart.options || !chart.options.chart){
+        type: 'pie',
+        custom: {},
+        events: {
+          render() {
+            const chart = this as Highcharts.Chart & { options: CustomChartOptions },
+              series = chart.series[0];
+            if (!chart.options || !chart.options.chart) {
               return;
             }
-            if(!chart.options.chart.custom){
+            if (!chart.options.chart.custom) {
               chart.options.chart.custom = {}
             }
             let customLabel = chart.options.chart.custom.label;
-            if(!customLabel){
+            if (!customLabel) {
               customLabel = chart.options.chart.custom.label =
-              chart.renderer.label(
-                `Aantal<br/><strong>${animals.length}</strong>`,0              
-              ).css({
-                color: '#000',
-                textAnchor: 'middle'
-              }).add();
-            
+                chart.renderer.label(
+                  `Totaal<br/><strong>${animals.length}</strong>`, 0
+                ).css({
+                  color: '#000',
+                  textAnchor: 'middle'
+                }).add();
+
             }
             const x = series.center[0] + chart.plotLeft;
             const labelHeight = Number(customLabel.attr('height')) || 0;
             const y = series.center[1] + chart.plotTop - labelHeight;
-            
+
             customLabel.attr({
               x,
               y
@@ -76,23 +76,23 @@ export class AnimalChartComponent implements OnInit {
             });
           }
         }
-      },    
+      },
       title: {
         text: 'Grafische weergave van de voorraad van diverse diersoorten.'
       },
       tooltip: {
         pointFormat: '<b>{series.name}: {point.y}</b>'
-    },
-    legend:{
-      enabled: true
-    },    
+      },
+      legend: {
+        enabled: true
+      },
       plotOptions: {
-        pie:{        
+        pie: {
           allowPointSelect: true,
           cursor: 'pointer',
           borderRadius: 8,
-          innerSize: '60%',                 
-          dataLabels: {        
+          innerSize: '60%',
+          dataLabels: {
             enabled: true,
             distance: -27,
             format: '{point.percentage:.0f}%',
@@ -101,19 +101,19 @@ export class AnimalChartComponent implements OnInit {
               color: '#fff'
             }
           },
-          showInLegend: true       
+          showInLegend: true
         }
       },
       series: [{
-        name: 'Aantal',
+        name: 'Totaal',
         colorByPoint: true,
-        type: 'pie',         
-        data: Object.entries(speciesCounts).map(([name,y]) =>({          
-            name,
-            y, 
+        type: 'pie',
+        data: Object.entries(speciesCounts).map(([name, y]) => ({
+          name,
+          y,
         }))
       } as Highcharts.SeriesPieOptions]
-    };    
+    };
   }
 
   countSpecies(animals: Animal[]): { [key: string]: number } {
