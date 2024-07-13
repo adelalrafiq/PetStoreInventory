@@ -28,13 +28,8 @@ export class AnimalAddComponent {
   editing: boolean = false;
 
   addNewAnimal() {
-    // Generate a new UUID for the animal
     this.newAnimal.id = uuidv4();
-
-    // Save the new animal to localStorage
     this.saveAnimalToLocalStorage(this.newAnimal);
-
-    // Navigate to the list page
     this.router.navigateByUrl('/animals');
   }
 
@@ -44,10 +39,7 @@ export class AnimalAddComponent {
 
   saveAnimalToLocalStorage(animal: Animal) {
     let animals = JSON.parse(localStorage.getItem('animals') || '[]');
-    animals.push(animal);
+    animals.unshift(animal);
     localStorage.setItem('animals', JSON.stringify(animals));
   }
 }
-
-
-
