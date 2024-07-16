@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
-import { Animal } from '../../models/animal';
+import { Pet } from '../../models/pet';
 
 
 interface CustomChartOptions extends Highcharts.Options {
@@ -14,13 +14,13 @@ interface CustomChartOptions extends Highcharts.Options {
 }
 
 @Component({
-  selector: 'app-animal-chart',
+  selector: 'app-pets-chart',
   standalone: true,
   imports: [HighchartsChartModule],
-  templateUrl: './animal-chart.component.html',
-  styleUrl: './animal-chart.component.css'
+  templateUrl: './pets-chart.component.html',
+  styleUrl: './pets-chart.component.css'
 })
-export class AnimalChartComponent implements OnInit {
+export class PetsChartComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions!: CustomChartOptions;
 
@@ -31,13 +31,13 @@ export class AnimalChartComponent implements OnInit {
 
   loadChartData(): void {
     // Haal de gegevens uit localStorage
-    const animals = JSON.parse(localStorage.getItem('animals') || '[]');
+    const pets = JSON.parse(localStorage.getItem('pets') || '[]');
 
     // Als er geen dieren zijn opgeslagen, stop dan
-    if (animals.length === 0) {
+    if (pets.length === 0) {
       return;
     }
-    const speciesCounts = this.countSpecies(animals);
+    const speciesCounts = this.countSpecies(pets);
     this.chartOptions = {
       chart: {
         type: 'pie',
@@ -56,12 +56,11 @@ export class AnimalChartComponent implements OnInit {
             if (!customLabel) {
               customLabel = chart.options.chart.custom.label =
                 chart.renderer.label(
-                  `Totaal<br/><strong>${animals.length}</strong>`, 0
+                  `Totaal<br/><strong>${pets.length}</strong>`, 0
                 ).css({
                   color: '#000',
                   textAnchor: 'middle'
                 }).add();
-
             }
             const x = series.center[0] + chart.plotLeft;
             const labelHeight = Number(customLabel.attr('height')) || 0;
@@ -116,13 +115,13 @@ export class AnimalChartComponent implements OnInit {
     };
   }
 
-  countSpecies(animals: Animal[]): { [key: string]: number } {
+  countSpecies(pets: Pet[]): { [key: string]: number } {
     const speciesCounts: { [key: string]: number } = {};
-    animals.forEach(animal => {
-      if (speciesCounts[animal.diersoort]) {
-        speciesCounts[animal.diersoort]++;
+    pets.forEach(pet => {
+      if (speciesCounts[pet.diersoort]) {
+        speciesCounts[pet.diersoort]++;
       } else {
-        speciesCounts[animal.diersoort] = 1;
+        speciesCounts[pet.diersoort] = 1;
       }
     });
     return speciesCounts;

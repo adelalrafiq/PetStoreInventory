@@ -4,10 +4,10 @@
       <h2 class="text-2xl font-semibold">Dieren Lijst</h2>
       <a routerLink="add" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Een Dier Toevoegen</a>
     </div>
-    <div *ngIf="animals.length === 0" class="bg-white shadow rounded-lg p-4 text-center">
+    <div *ngIf="pets.length === 0" class="bg-white shadow rounded-lg p-4 text-center">
       <p class="text-gray-500">Momenteel zijn er geen dieren.</p>
     </div>
-    <div *ngIf="animals.length > 0" class="bg-white shadow rounded-lg overflow-hidden ">
+    <div *ngIf="pets.length > 0" class="bg-white shadow rounded-lg overflow-hidden ">
       <div class="table-wrp block max-h-96 thin-scrollbar">
         <table class="min-w-full bg-white">
           <thead>
@@ -23,26 +23,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let animal of animals" class="border-b">
-              <td class="py-2 px-4 text-center">{{ animal.naam }}</td>
-              <td class="py-2 px-4 text-center">{{ animal.diersoort }}</td>
-              <td class="py-2 px-4 text-center">{{ animal.leeftijd }}</td>
-              <td class="py-2 px-4 text-center">{{ animal.prijs }}</td>
-              <td class="py-2 px-4 text-center">{{ animal.geslacht }}</td>
-              <td class="py-2 px-4 text-center">{{ animal.beschrijving }}</td>
+            <tr *ngFor="let pet of pets" class="border-b">
+              <td class="py-2 px-4 text-center">{{ pet.naam }}</td>
+              <td class="py-2 px-4 text-center">{{ pet.diersoort }}</td>
+              <td class="py-2 px-4 text-center">{{ pet.leeftijd }}</td>
+              <td class="py-2 px-4 text-center">{{ pet.prijs }}</td>
+              <td class="py-2 px-4 text-center">{{ pet.geslacht }}</td>
+              <td class="py-2 px-4 text-center">{{ pet.beschrijving }}</td>
               <td class="py-2 px-4 text-center">
                 <button class="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-600"
-                  (click)="editAnimal(animal)">Bewerken</button>
+                  (click)="editPet(pet)">Bewerken</button>
               </td>
               <td class="py-2 px-4 text-center">
                 <button class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
-                  (click)="deleteAnimal(animal)">Verwijderen</button>
+                  (click)="deletePet(pet)">Verwijderen</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <app-animal-chart class="absolute bottom-0 left-0 w-full"></app-animal-chart>
+      <app-pets-chart class="absolute bottom-0 left-0 w-full"></app-pets-chart>
     </div>
   </div>
 </div>

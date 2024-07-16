@@ -5,35 +5,35 @@
     <label for="naam" class="block text-sm font-medium text-gray-700">Naam</label>
     <input type="text" id="naam" name="naam" placeholder="Naam van het dier"
       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-      [(ngModel)]="newAnimal.naam" />
+      [(ngModel)]="newPet.naam" />
   </div>
 
   <div class="mb-4">
     <label for="diersoort" class="block text-sm font-medium text-gray-700">Diersoort</label>
     <input type="text" id="diersoort" name="diersoort" placeholder="Diersoort"
       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-      [(ngModel)]="newAnimal.diersoort" />
+      [(ngModel)]="newPet.diersoort" />
   </div>
 
   <div class="mb-4">
     <label for="leeftijd" class="block text-sm font-medium text-gray-700">Leeftijd</label>
     <input type="number" id="leeftijd" name="leeftijd" placeholder="Leeftijd"
       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-      [(ngModel)]="newAnimal.leeftijd" />
+      [(ngModel)]="newPet.leeftijd" />
   </div>
 
   <div class="mb-4">
     <label for="prijs" class="block text-sm font-medium text-gray-700">Prijs</label>
     <input type="number" id="prijs" name="prijs" placeholder="Prijs in euro"
       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-      [(ngModel)]="newAnimal.prijs" />
+      [(ngModel)]="newPet.prijs" />
   </div>
 
   <div class="mb-4">
     <label for="geslacht" class="block text-sm font-medium text-gray-700">Geslacht</label>
     <select id="geslacht" name="geslacht"
       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-      [(ngModel)]="newAnimal.geslacht">
+      [(ngModel)]="newPet.geslacht">
       <option value="Mannelijk">Mannelijk</option>
       <option value="Vrouwelijk">Vrouwelijk</option>
       <option value="Onbekend">Onbekend</option>
@@ -44,12 +44,12 @@
     <label for="beschrijving" class="block text-sm font-medium text-gray-700">Beschrijving</label>
     <textarea id="beschrijving" name="beschrijving" rows="3"
       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-      [(ngModel)]="newAnimal.beschrijving"></textarea>
+      [(ngModel)]="newPet.beschrijving"></textarea>
   </div>
 
   <div class="flex justify-end space-x-2">
     <button class="bg-blue-500 text-white px-4 py-2 rounded-l-md hover:bg-blue-600 focus:outline-none"
-      (click)="addNewAnimal()">Toevoegen</button>
+      (click)="addNewPet()">Toevoegen</button>
     <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-r-md hover:bg-gray-600 focus:outline-none"
       (click)="cancel()">Annuleren</button>
   </div>
