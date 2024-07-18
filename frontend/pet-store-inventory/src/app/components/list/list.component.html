@@ -2,12 +2,20 @@
   <div class="container mx-auto">
     <div class="flex justify-between mb-4">
       <h2 class="text-2xl font-semibold">Dieren Lijst</h2>
+      <div class="relative">
+        <input type="text" placeholder="Zoeken..."
+          class="px-4 py-2 pl-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          [(ngModel)]="searchText" (ngModelChange)="filterPets()">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-search text-gray-500"></i>
+        </span>
+      </div>
       <a routerLink="form" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Een Dier Toevoegen</a>
     </div>
-    <div *ngIf="petService.list.length === 0" class="bg-white shadow rounded-lg p-4 text-center">
+    <div *ngIf="filteredPets.length === 0" class="bg-white shadow rounded-lg p-4 text-center">
       <p class="text-gray-500">Momenteel zijn er geen dieren.</p>
     </div>
-    <div *ngIf="petService.list.length > 0" class="bg-white shadow rounded-lg overflow-hidden">
+    <div *ngIf="filteredPets.length > 0" class="bg-white shadow rounded-lg overflow-hidden">
       <div class="table-wrp block max-h-96 thin-scrollbar">
         <table class="min-w-full bg-white">
           <thead>
@@ -23,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let pet of petService.list  'id': true" class="border-b">
+            <tr *ngFor="let pet of filteredPets" class="border-b">
               <td class="py-2 px-4 text-center">{{ pet.naam }}</td>
               <td class="py-2 px-4 text-center">{{ pet.diersoort }}</td>
               <td class="py-2 px-4 text-center">{{ pet.leeftijd }}</td>
@@ -31,7 +39,7 @@
               <td class="py-2 px-4 text-center">{{ pet.geslacht }}</td>
               <td class="py-2 px-4 text-center">
                 <a [routerLink]="['/details', pet.id]"
-                  class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600">Meer details</a>
+                  class="bg-gray-200 text-black px-4 py-1 rounded hover:bg-gray-300">Meer details</a>
               </td>
               <td class="py-2 px-4 text-center">
                 <button class="text-yellow-500 hover:text-yellow-600" (click)="populateForm(pet)">

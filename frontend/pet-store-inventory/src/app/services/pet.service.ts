@@ -3,7 +3,7 @@ import { PetDetails } from "../models/petDetails";
 import { environment } from "../../environments/environment";
 import { Injectable } from '@angular/core';
 import { NgForm } from "@angular/forms";
-import { catchError, Observable, of } from "rxjs";
+import { BehaviorSubject, catchError, Observable, of } from "rxjs";
 
 @Injectable({
     providedIn: 'root' // This makes the service available application-wide
@@ -15,13 +15,15 @@ export class PetService {
     list: PetDetails[] = [];
     formData: PetDetails = new PetDetails();
     formSubmitted: boolean = false;
+    listUpdated = new BehaviorSubject<void>(undefined);
 
     constructor(private http: HttpClient) { }
 
     refreshList() {
         this.http.get<PetDetails[]>(this.apiUrl).subscribe({
-            next: res => {
-                this.list = res as PetDetails[]
+            next: data => {
+                this.list = data as PetDetails[]
+                this.listUpdated.next();
             },
             error: err => {
                 console.log("error", err);
