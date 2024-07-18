@@ -2,12 +2,12 @@
   <div class="container mx-auto ">
     <div class="flex justify-between mb-4">
       <h2 class="text-2xl font-semibold">Dieren Lijst</h2>
-      <a routerLink="add" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Een Dier Toevoegen</a>
+      <a routerLink="form" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Een Dier Toevoegen</a>
     </div>
-    <div *ngIf="pets.length === 0" class="bg-white shadow rounded-lg p-4 text-center">
+    <div *ngIf="petService.list.length === 0" class="bg-white shadow rounded-lg p-4 text-center">
       <p class="text-gray-500">Momenteel zijn er geen dieren.</p>
     </div>
-    <div *ngIf="pets.length > 0" class="bg-white shadow rounded-lg overflow-hidden ">
+    <div *ngIf="petService.list.length > 0" class="bg-white shadow rounded-lg overflow-hidden ">
       <div class="table-wrp block max-h-96 thin-scrollbar">
         <table class="min-w-full bg-white">
           <thead>
@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let pet of pets" class="border-b">
+            <tr *ngFor="let pet of petService.list" class="border-b">
               <td class="py-2 px-4 text-center">{{ pet.naam }}</td>
               <td class="py-2 px-4 text-center">{{ pet.diersoort }}</td>
               <td class="py-2 px-4 text-center">{{ pet.leeftijd }}</td>
@@ -32,17 +32,17 @@
               <td class="py-2 px-4 text-center">{{ pet.beschrijving }}</td>
               <td class="py-2 px-4 text-center">
                 <button class="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-600"
-                  (click)="editPet(pet)">Bewerken</button>
+                  (click)="populateForm(pet)">Bewerken</button>
               </td>
               <td class="py-2 px-4 text-center">
                 <button class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
-                  (click)="deletePet(pet)">Verwijderen</button>
+                  (click)="onDelete(pet.id)">Verwijderen</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <app-pets-chart class="absolute bottom-0 left-0 w-full"></app-pets-chart>
+      <app-chart class="absolute bottom-0 left-0 w-full"></app-chart>
     </div>
   </div>
 </div>

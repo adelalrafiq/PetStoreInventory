@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
-import { Pet } from '../../models/pet';
+import { PetDetails } from '../../models/petDetails';
+import { PetService } from '../../services/pet.service';
 
 
 interface CustomChartOptions extends Highcharts.Options {
@@ -14,13 +15,14 @@ interface CustomChartOptions extends Highcharts.Options {
 }
 
 @Component({
-  selector: 'app-pets-chart',
+  selector: 'app-chart',
   standalone: true,
   imports: [HighchartsChartModule],
-  templateUrl: './pets-chart.component.html',
-  styleUrl: './pets-chart.component.css'
+  templateUrl: './chart.component.html',
+  styleUrl: './chart.component.css'
 })
-export class PetsChartComponent implements OnInit {
+export class ChartComponent implements OnInit {
+  constructor(private petService: PetService) { }
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions!: CustomChartOptions;
 
@@ -31,13 +33,14 @@ export class PetsChartComponent implements OnInit {
 
   loadChartData(): void {
     // Haal de gegevens uit localStorage
-    const pets = JSON.parse(localStorage.getItem('pets') || '[]');
+    // const list = JSON.parse(localStorage.getItem('list') || '[]');
+    const list = this.petService.list as PetDetails[];
 
     // Als er geen dieren zijn opgeslagen, stop dan
-    if (pets.length === 0) {
+    if (list.length === 0) {
       return;
     }
-    const speciesCounts = this.countSpecies(pets);
+    const speciesCounts = this.countSpecies(list);
     this.chartOptions = {
       chart: {
         type: 'pie',
@@ -56,7 +59,7 @@ export class PetsChartComponent implements OnInit {
             if (!customLabel) {
               customLabel = chart.options.chart.custom.label =
                 chart.renderer.label(
-                  `Totaal<br/><strong>${pets.length}</strong>`, 0
+                  `Totaal<br/><strong>${list.length}</strong>`, 0
                 ).css({
                   color: '#000',
                   textAnchor: 'middle'
@@ -115,9 +118,9 @@ export class PetsChartComponent implements OnInit {
     };
   }
 
-  countSpecies(pets: Pet[]): { [key: string]: number } {
+  countSpecies(list: PetDetails[]): { [key: string]: number } {
     const speciesCounts: { [key: string]: number } = {};
-    pets.forEach(pet => {
+    list.forEach(pet => {
       if (speciesCounts[pet.diersoort]) {
         speciesCounts[pet.diersoort]++;
       } else {

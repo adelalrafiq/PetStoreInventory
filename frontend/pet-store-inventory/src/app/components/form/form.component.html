@@ -1,0 +1,162 @@
+<div class="p-4">
+    <div class="container mx-auto">
+        <h2 class="text-2xl font-semibold mb-4">
+            {{!petId ? "Toevoegen Nieuw Dier" : "Bijwerken Huidig Dier"}}
+        </h2>
+        <form #form="ngForm" (submit)="onSubmit(form)" [class.submitted]="petService.formSubmitted" novalidate
+            autocomplete="off">
+            <input type="hidden" id="id" name="id" [value]="petService.formData.id" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="mb-4">
+                    <label for="naam" class="block text-sm font-medium text-gray-700">Naam <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" id="naam" name="naam" placeholder="Naam van het dier"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.naam" required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="diersoort" class="block text-sm font-medium text-gray-700">Diersoort <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" id="diersoort" name="diersoort" placeholder="Diersoort"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.diersoort" required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="leeftijd" class="block text-sm font-medium text-gray-700">Leeftijd <span
+                            class="text-red-500">*</span></label>
+                    <input type="number" id="leeftijd" name="leeftijd" placeholder="Leeftijd"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.leeftijd" required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="prijs" class="block text-sm font-medium text-gray-700">Prijs <span
+                            class="text-red-500">*</span></label>
+                    <input type="number" id="prijs" name="prijs" placeholder="Prijs in euro"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.prijs" required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="geslacht" class="block text-sm font-medium text-gray-700">Geslacht</label>
+                    <select id="geslacht" name="geslacht"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.geslacht">
+                        <option value="Mannelijk">Mannelijk</option>
+                        <option value="Vrouwelijk">Vrouwelijk</option>
+                        <option value="Onbekend">Onbekend</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="locatie" class="block text-sm font-medium text-gray-700">Locatie</label>
+                    <input type="text" id="locatie" name="locatie" placeholder="Locatie"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.locatie" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="ras" class="block text-sm font-medium text-gray-700">Ras</label>
+                    <input type="text" id="ras" name="ras" placeholder="Ras"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.ras" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="kleur" class="block text-sm font-medium text-gray-700">Kleur</label>
+                    <input type="text" id="kleur" name="kleur" placeholder="Kleur"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.kleur" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="gewicht" class="block text-sm font-medium text-gray-700">Gewicht</label>
+                    <input type="number" id="gewicht" name="gewicht" placeholder="Gewicht in kg"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.gewicht" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="vaccinatiestatus"
+                        class="block text-sm font-medium text-gray-700">Vaccinatiestatus</label>
+                    <input type="text" id="vaccinatiestatus" name="vaccinatiestatus" placeholder="Vaccinatiestatus"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.vaccinatiestatus" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="chipnummer" class="block text-sm font-medium text-gray-700">Chipnummer</label>
+                    <input type="text" id="chipnummer" name="chipnummer" placeholder="Chipnummer"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.chipnummer" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="gezondheidsstatus"
+                        class="block text-sm font-medium text-gray-700">Gezondheidsstatus</label>
+                    <input type="text" id="gezondheidsstatus" name="gezondheidsstatus" placeholder="Gezondheidsstatus"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.gezondheidsstatus" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="voeding" class="block text-sm font-medium text-gray-700">Voeding</label>
+                    <input type="text" id="voeding" name="voeding" placeholder="Voeding"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.voeding" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="gedrag" class="block text-sm font-medium text-gray-700">Gedrag</label>
+                    <input type="text" id="gedrag" name="gedrag" placeholder="Gedrag"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.gedrag" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="datumVanBinnenkomst" class="block text-sm font-medium text-gray-700">Datum van
+                        Binnenkomst</label>
+                    <input type="date" id="datumVanBinnenkomst" name="datumVanBinnenkomst"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.datumVanBinnenkomst" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="verkoopstatus" class="block text-sm font-medium text-gray-700">Verkoopstatus</label>
+                    <input type="text" id="verkoopstatus" name="verkoopstatus" placeholder="Verkoopstatus"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.verkoopstatus" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="contactpersoon" class="block text-sm font-medium text-gray-700">Contactpersoon</label>
+                    <input type="text" id="contactpersoon" name="contactpersoon" placeholder="Contactpersoon"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.contactpersoon" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="beschrijving" class="block text-sm font-medium text-gray-700">Beschrijving</label>
+                    <textarea id="beschrijving" name="beschrijving" rows="3"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        [(ngModel)]="petService.formData.beschrijving"></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-2">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-l-md hover:bg-blue-600 focus:outline-none"
+                    type="submit">
+                    {{!petId ? "Toevoegen" : "Bijwerken"}}
+                </button>
+                <button type="button"
+                    class="bg-gray-500 text-white px-4 py-2 rounded-r-md hover:bg-gray-600 focus:outline-none"
+                    (click)="cancel()">
+                    Annuleren
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

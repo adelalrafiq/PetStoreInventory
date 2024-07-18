@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { Pet } from "../models/pet";
-import { environment } from "../../environments/environment.development";
+import { PetDetails } from "../models/petDetails";
+import { environment } from "../../environments/environment";
 import { Injectable } from '@angular/core';
+import { NgForm } from "@angular/forms";
+import { catchError, Observable, of } from "rxjs";
 
 @Injectable({
     providedIn: 'root' // This makes the service available application-wide
@@ -10,15 +11,17 @@ import { Injectable } from '@angular/core';
 
 export class PetService {
 
-    apiUrl: string = environment.apiBaseUrl + '/petstore'
+    apiUrl: string = environment.apiBaseUrl
+    list: PetDetails[] = [];
+    formData: PetDetails = new PetDetails();
+    formSubmitted: boolean = false;
 
     constructor(private http: HttpClient) { }
 
-    getPets() {
-        this.http.get<Pet[]>(this.apiUrl).subscribe({
+    refreshList() {
+        this.http.get<PetDetails[]>(this.apiUrl).subscribe({
             next: res => {
-                console.log("service", res);
-
+                this.list = res as PetDetails[]
             },
             error: err => {
                 console.log("error", err);
@@ -26,19 +29,30 @@ export class PetService {
         })
     }
 
-    // getPet(id: number): Observable<Pet> {
-    //     return this.http.get<Pet>(`${this.apiUrl}/${id}`);
+    addNewPet() {
+        return this.http.post(this.apiUrl, this.formData)
+    }
+    updatePet() {
+        return this.http.put(`${this.apiUrl}/${this.formData.id}`, this.formData)
+    }
+
+    deletePet(id: string) {
+        return this.http.delete(`${this.apiUrl}/${id}`)
+    }
+
+    // deletePet(id: number): Observable<PetDetails[]> {
+    //     return this.http.delete<PetDetails[]>(`${this.apiUrl}/${id}`).pipe(
+    //         catchError(error => {
+    //             // Verwerk de fout, log het of geef een lege array terug
+    //             console.error(error);
+    //             return of([]); // Geeft een lege array terug in geval van een fout
+    //         })
+    //     );
     // }
 
-    // addPet(Pet: Pet): Observable<Pet> {
-    //     return this.http.post<Pet>(this.apiUrl, Pet);
-    // }
-
-    // updatePet(Pet: Pet): Observable<Pet> {
-    //     return this.http.put<Pet>(`${this.apiUrl}/${Pet.id}`, Pet);
-    // }
-
-    // deletePet(id: number): Observable<Pet> {
-    //     return this.http.delete<Pet>(`${this.apiUrl}/${id}`);
-    // }
+    resetForm(form: NgForm) {
+        form.form.reset()
+        this.formData = new PetDetails();
+        this.formSubmitted = false;
+    }
 }
