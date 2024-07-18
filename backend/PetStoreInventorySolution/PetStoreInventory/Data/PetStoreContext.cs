@@ -10,7 +10,7 @@ namespace PetStoreInventory.Data
         public PetStoreContext(DbContextOptions options) : base(options)
         { 
         }
-        public DbSet<PetStore> PetStore { get; set; }
+        public DbSet<PetDetails> PetStore { get; set; }
        
     }
 
