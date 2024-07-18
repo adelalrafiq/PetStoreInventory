@@ -22,8 +22,8 @@ export class FormComponent {
     public petService: PetService,
     private toastr: ToastrService
   ) { }
+
   petId = this.route.snapshot.paramMap.get('id');
-  // numericPetId = Number(this.petId)
 
   onSubmit(form: NgForm) {
     this.petService.formSubmitted = true;

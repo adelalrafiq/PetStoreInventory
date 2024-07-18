@@ -32,11 +32,7 @@ export class ChartComponent implements OnInit {
   }
 
   loadChartData(): void {
-    // Haal de gegevens uit localStorage
-    // const list = JSON.parse(localStorage.getItem('list') || '[]');
     const list = this.petService.list as PetDetails[];
-
-    // Als er geen dieren zijn opgeslagen, stop dan
     if (list.length === 0) {
       return;
     }
@@ -65,6 +61,7 @@ export class ChartComponent implements OnInit {
                   textAnchor: 'middle'
                 }).add();
             }
+
             const x = series.center[0] + chart.plotLeft;
             const labelHeight = Number(customLabel.attr('height')) || 0;
             const y = series.center[1] + chart.plotTop - labelHeight;

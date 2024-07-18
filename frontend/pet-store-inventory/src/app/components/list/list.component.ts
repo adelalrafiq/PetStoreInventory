@@ -37,10 +37,6 @@ export class ListComponent implements OnInit {
     this.filterPets();
   }
 
-  // ngOnChanges(): void {
-  //   this.filterPets();
-  // }
-
   filterPets(): void {
     this.searchText = this.searchText.trimStart();
     this.filteredPets = this.petService.list.filter(pet =>

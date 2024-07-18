@@ -6,7 +6,7 @@ import { NgForm } from "@angular/forms";
 import { BehaviorSubject, catchError, Observable, of } from "rxjs";
 
 @Injectable({
-    providedIn: 'root' // This makes the service available application-wide
+    providedIn: 'root'
 })
 
 export class PetService {
@@ -41,16 +41,6 @@ export class PetService {
     deletePet(id: string) {
         return this.http.delete(`${this.apiUrl}/${id}`)
     }
-
-    // deletePet(id: number): Observable<PetDetails[]> {
-    //     return this.http.delete<PetDetails[]>(`${this.apiUrl}/${id}`).pipe(
-    //         catchError(error => {
-    //             // Verwerk de fout, log het of geef een lege array terug
-    //             console.error(error);
-    //             return of([]); // Geeft een lege array terug in geval van een fout
-    //         })
-    //     );
-    // }
 
     resetForm(form: NgForm) {
         form.form.reset()
