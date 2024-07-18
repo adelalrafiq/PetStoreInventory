@@ -1,0 +1,29 @@
+<div class="p-4">
+    <div class="container mx-auto bg-white shadow rounded-lg p-4">
+        <h2 class="text-2xl font-semibold mb-4">Details van {{ pet?.naam }}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><strong>Naam:</strong> {{ pet?.naam }}</div>
+            <div><strong>Diersoort:</strong> {{ pet?.diersoort }}</div>
+            <div><strong>Leeftijd:</strong> {{ pet?.leeftijd }}</div>
+            <div><strong>Prijs:</strong> {{ pet?.prijs }}</div>
+            <div><strong>Geslacht:</strong> {{ pet?.geslacht }}</div>
+            <div><strong>Locatie:</strong> {{ pet?.locatie }}</div>
+            <div><strong>Ras:</strong> {{ pet?.ras }}</div>
+            <div><strong>Kleur:</strong> {{ pet?.kleur }}</div>
+            <div><strong>Gewicht:</strong> {{ pet?.gewicht }}</div>
+            <div><strong>Vaccinatiestatus:</strong> {{ pet?.vaccinatiestatus }}</div>
+            <div><strong>Chipnummer:</strong> {{ pet?.chipnummer }}</div>
+            <div><strong>Gezondheidsstatus:</strong> {{ pet?.gezondheidsstatus }}</div>
+            <div><strong>Voeding:</strong> {{ pet?.voeding }}</div>
+            <div><strong>Gedrag:</strong> {{ pet?.gedrag }}</div>
+            <div><strong>Datum van binnenkomst:</strong> {{ pet?.datumVanBinnenkomst }}</div>
+            <div><strong>Verkoopstatus:</strong> {{ pet?.verkoopstatus }}</div>
+            <div><strong>Contactpersoon:</strong> {{ pet?.contactpersoon }}</div>
+            <div class="col-span-2"><strong>Beschrijving:</strong> {{ pet?.beschrijving }}</div>
+        </div>
+        <div class="mt-4">
+            <button routerLink="/list" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Terug naar
+                lijst</button>
+        </div>
+    </div>
+</div>

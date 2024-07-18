@@ -15,18 +15,26 @@ export class PetService {
     list: PetDetails[] = [];
     formData: PetDetails = new PetDetails();
     formSubmitted: boolean = false;
-    listUpdated = new BehaviorSubject<void>(undefined);
+    listUpdated = new BehaviorSubject<PetDetails[]>([]);
 
     constructor(private http: HttpClient) { }
 
     refreshList() {
         this.http.get<PetDetails[]>(this.apiUrl).subscribe({
             next: data => {
-                this.list = data as PetDetails[]
-                this.listUpdated.next();
+                if (Array.isArray(data)) {
+                    this.list = data
+                    this.listUpdated.next(this.list);
+                } else {
+                    console.error('Received data is not an array:', data);
+                    this.list = [];
+                    this.listUpdated.next(this.list)
+                }
             },
             error: err => {
                 console.log("error", err);
+                this.list = [];
+                this.listUpdated.next(this.list);
             }
         })
     }

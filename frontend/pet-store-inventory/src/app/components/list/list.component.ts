@@ -7,8 +7,6 @@ import { PetService } from '../../services/pet.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -18,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListComponent implements OnInit {
   searchText: string = '';
-  filteredPets: any[] = [];
+  filteredPets: PetDetails[] = [];
   list: PetDetails[] = [];
 
   constructor(
@@ -29,28 +27,31 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.petService.refreshList();
-    this.petService.listUpdated.subscribe(() => {
-      this.filteredPets = this.petService.list;
+    this.petService.listUpdated.subscribe((list: PetDetails[]) => {
+      this.petService.list = list;
       this.filterPets();
     });
-    this.filteredPets = this.petService.list;
-    this.filterPets();
   }
 
   filterPets(): void {
     this.searchText = this.searchText.trimStart();
-    this.filteredPets = this.petService.list.filter(pet =>
-      pet.naam.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      pet.diersoort.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      pet.leeftijd.toString().includes(this.searchText) ||
-      pet.prijs.toString().includes(this.searchText) ||
-      pet.geslacht.toLowerCase().includes(this.searchText.toLowerCase())
-    );
+    if (Array.isArray(this.list)) {
+      this.filteredPets = this.petService.list.filter(pet =>
+        pet.naam.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        pet.diersoort.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        pet.leeftijd.toString().includes(this.searchText) ||
+        pet.prijs.toString().includes(this.searchText) ||
+        pet.geslacht.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    } else {
+      console.error('PetService.list is not an array:', this.list);
+      this.filteredPets = [];
+    }
   }
 
   populateForm(selectedRecord: PetDetails) {
     this.petService.formData = Object.assign({}, selectedRecord);
-    this.router.navigateByUrl(`list/form/${selectedRecord.id}`);
+    this.router.navigateByUrl(`form/${selectedRecord.id}`);
   }
 
   onDelete(id: string) {
@@ -60,10 +61,7 @@ export class ListComponent implements OnInit {
           const validResponse = res ?? [];
           this.petService.list = validResponse as PetDetails[];
           this.petService.refreshList();
-          this.filteredPets = this.petService.list;
-          this.filterPets();
           this.toastr.success('Succesvol verwijderd', 'Pet');
-
         },
         error: err => {
           console.log(err);

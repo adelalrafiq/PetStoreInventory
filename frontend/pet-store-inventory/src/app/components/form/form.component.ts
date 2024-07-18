@@ -44,7 +44,7 @@ export class FormComponent {
           this.petService.list = res as PetDetails[];
           this.petService.resetForm(form);
           this.toastr.success('Succesvol toegevoegd', 'Nieuw Pet')
-          this.router.navigateByUrl('/list');
+          this.router.navigateByUrl('list');
         },
         error: err => {
           console.log(err);
@@ -61,7 +61,7 @@ export class FormComponent {
           this.petService.list = validResponse as PetDetails[];
           this.petService.resetForm(form);
           this.toastr.info('Succesvol updated', 'pet')
-          this.router.navigateByUrl('/list');
+          this.router.navigateByUrl('list');
         },
         error: err => {
           console.log(err);
@@ -70,7 +70,7 @@ export class FormComponent {
   }
 
   cancel() {
-    this.router.navigateByUrl('/list');
+    this.router.navigateByUrl('list');
   }
 
 }
