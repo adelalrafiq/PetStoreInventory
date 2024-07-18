@@ -1,5 +1,5 @@
 <div class="p-4">
-  <div class="container mx-auto ">
+  <div class="container mx-auto">
     <div class="flex justify-between mb-4">
       <h2 class="text-2xl font-semibold">Dieren Lijst</h2>
       <a routerLink="form" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Een Dier Toevoegen</a>
@@ -7,7 +7,7 @@
     <div *ngIf="petService.list.length === 0" class="bg-white shadow rounded-lg p-4 text-center">
       <p class="text-gray-500">Momenteel zijn er geen dieren.</p>
     </div>
-    <div *ngIf="petService.list.length > 0" class="bg-white shadow rounded-lg overflow-hidden ">
+    <div *ngIf="petService.list.length > 0" class="bg-white shadow rounded-lg overflow-hidden">
       <div class="table-wrp block max-h-96 thin-scrollbar">
         <table class="min-w-full bg-white">
           <thead>
@@ -17,26 +17,31 @@
               <th class="py-2 px-4 bg-gray-200 text-center">Leeftijd</th>
               <th class="py-2 px-4 bg-gray-200 text-center">Prijs</th>
               <th class="py-2 px-4 bg-gray-200 text-center">Geslacht</th>
-              <th class="py-2 px-4 bg-gray-200 text-center">Beschrijving</th>
+              <th class="py-2 px-4 bg-gray-200 text-center">Meer details</th>
               <th class="py-2 px-4 bg-gray-200 text-center">Bewerken</th>
               <th class="py-2 px-4 bg-gray-200 text-center">Verwijderen</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let pet of petService.list" class="border-b">
+            <tr *ngFor="let pet of petService.list  'id': true" class="border-b">
               <td class="py-2 px-4 text-center">{{ pet.naam }}</td>
               <td class="py-2 px-4 text-center">{{ pet.diersoort }}</td>
               <td class="py-2 px-4 text-center">{{ pet.leeftijd }}</td>
               <td class="py-2 px-4 text-center">{{ pet.prijs }}</td>
               <td class="py-2 px-4 text-center">{{ pet.geslacht }}</td>
-              <td class="py-2 px-4 text-center">{{ pet.beschrijving }}</td>
               <td class="py-2 px-4 text-center">
-                <button class="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-600"
-                  (click)="populateForm(pet)">Bewerken</button>
+                <a [routerLink]="['/details', pet.id]"
+                  class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600">Meer details</a>
               </td>
               <td class="py-2 px-4 text-center">
-                <button class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
-                  (click)="onDelete(pet.id)">Verwijderen</button>
+                <button class="text-yellow-500 hover:text-yellow-600" (click)="populateForm(pet)">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </td>
+              <td class="py-2 px-4 text-center">
+                <button class="text-red-500 hover:text-red-600" (click)="onDelete(pet.id)">
+                  <i class="fas fa-trash"></i>
+                </button>
               </td>
             </tr>
           </tbody>
