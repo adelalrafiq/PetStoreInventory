@@ -25,5 +25,13 @@ Deze applicatie is ontworpen om de voorraad van verschillende diersoorten in een
 ### Backend Opzetten
 1. **Kloon de repository:**
    ```bash
-   git clone [source code link]
+   git clone https://github.com/adelalrafiq/PetStoreInventory.git
    cd path/to/repository
+2. **Navigeer naar de backend-map:**
+   ```bash
+    cd Backend
+3. **Installeer de benodigde packages:**
+   ```bash
+    dotnet restore
+4. **Configureer de database-verbinding:**
+   - Open appsettings.json en zorg ervoor dat de verbindingstring correct is ingesteld voor jouw SQL Server-instantie.
