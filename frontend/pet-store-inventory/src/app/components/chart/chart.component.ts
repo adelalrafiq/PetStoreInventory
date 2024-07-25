@@ -22,21 +22,38 @@ interface CustomChartOptions extends Highcharts.Options {
   styleUrl: './chart.component.css'
 })
 export class ChartComponent implements OnInit {
-  constructor(private petService: PetService) { }
   Highcharts: typeof Highcharts = Highcharts;
+  chart: Highcharts.Chart | undefined;
   chartOptions!: CustomChartOptions;
+  pets: PetDetails[] = [];
+
+  constructor(private petService: PetService) { }
 
 
   ngOnInit(): void {
-    this.loadChartData();
+    this.petService.filteredListUpdated.subscribe(pets => {
+      this.pets = pets
+      this.loadChartData();
+    })
   }
 
   loadChartData(): void {
-    const list = this.petService.list as PetDetails[];
-    if (list.length === 0) {
+    if (!this.pets || this.pets.length === 0) {
+      this.chartOptions = {
+        chart: { type: 'pie' },
+        title: { text: 'No data available' },
+        series: []
+      };
+      if (this.chart) {
+        this.chart?.update(this.chartOptions, true, true);
+      } else {
+        this.chart = Highcharts.chart('container', this.chartOptions);
+      }
       return;
     }
-    const speciesCounts = this.countSpecies(list);
+
+    const speciesCounts = this.countSpecies(this.pets);
+    const petsLength = this.pets.length;
     this.chartOptions = {
       chart: {
         type: 'pie',
@@ -55,11 +72,15 @@ export class ChartComponent implements OnInit {
             if (!customLabel) {
               customLabel = chart.options.chart.custom.label =
                 chart.renderer.label(
-                  `Totaal<br/><strong>${list.length}</strong>`, 0
+                  `Totaal<br/><strong>${petsLength}</strong>`, 0
                 ).css({
                   color: '#000',
                   textAnchor: 'middle'
                 }).add();
+            } else {
+              customLabel.attr({
+                text: `Totaal<br/><strong>${petsLength}</strong>`
+              });
             }
 
             const x = series.center[0] + chart.plotLeft;
@@ -104,7 +125,7 @@ export class ChartComponent implements OnInit {
         }
       },
       series: [{
-        name: 'Totaal',
+        name: 'Aantal',
         colorByPoint: true,
         type: 'pie',
         data: Object.entries(speciesCounts).map(([name, y]) => ({

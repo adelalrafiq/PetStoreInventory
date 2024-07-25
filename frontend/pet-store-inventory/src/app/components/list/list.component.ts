@@ -7,6 +7,7 @@ import { PetService } from '../../services/pet.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -17,7 +18,6 @@ import { FormsModule } from '@angular/forms';
 export class ListComponent implements OnInit {
   searchText: string = '';
   filteredPets: PetDetails[] = [];
-  list: PetDetails[] = [];
 
   constructor(
     private router: Router,
@@ -35,17 +35,21 @@ export class ListComponent implements OnInit {
 
   filterPets(): void {
     this.searchText = this.searchText.trimStart();
-    if (Array.isArray(this.list)) {
+    if (Array.isArray(this.petService.list)) {
       this.filteredPets = this.petService.list.filter(pet =>
         pet.naam.toLowerCase().includes(this.searchText.toLowerCase()) ||
         pet.diersoort.toLowerCase().includes(this.searchText.toLowerCase()) ||
         pet.leeftijd.toString().includes(this.searchText) ||
         pet.prijs.toString().includes(this.searchText) ||
         pet.geslacht.toLowerCase().includes(this.searchText.toLowerCase())
-      );
+      ).sort((a, b) => a.datumVanBinnenkomst > b.datumVanBinnenkomst ? -1 : 1);
+      this.petService.filteredListUpdated.next(this.filteredPets);
     } else {
-      console.error('PetService.list is not an array:', this.list);
+      console.log(Array.isArray(this.petService.list));
+      console.error('PetService.list is not an array:', this.petService.list);
       this.filteredPets = [];
+      this.petService.filteredListUpdated.next(this.filteredPets);
+
     }
   }
 

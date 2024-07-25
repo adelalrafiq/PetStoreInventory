@@ -13,9 +13,11 @@ export class PetService {
 
     apiUrl: string = environment.apiBaseUrl
     list: PetDetails[] = [];
+    filteredList: PetDetails[] = [];
     formData: PetDetails = new PetDetails();
     formSubmitted: boolean = false;
     listUpdated = new BehaviorSubject<PetDetails[]>([]);
+    filteredListUpdated = new BehaviorSubject<PetDetails[]>([]);
 
     constructor(private http: HttpClient) { }
 
@@ -25,16 +27,22 @@ export class PetService {
                 if (Array.isArray(data)) {
                     this.list = data
                     this.listUpdated.next(this.list);
+                    this.filteredList = this.list;
+                    this.filteredListUpdated.next(this.filteredList);
                 } else {
                     console.error('Received data is not an array:', data);
                     this.list = [];
-                    this.listUpdated.next(this.list)
+                    this.listUpdated.next(this.list);
+                    this.filteredList = [];
+                    this.filteredListUpdated.next(this.filteredList);
                 }
             },
             error: err => {
                 console.log("error", err);
                 this.list = [];
                 this.listUpdated.next(this.list);
+                this.filteredList = [];
+                this.filteredListUpdated.next(this.filteredList);
             }
         })
     }
