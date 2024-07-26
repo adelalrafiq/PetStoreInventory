@@ -4,31 +4,69 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-- main
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  DB_SERVER: $(DB_SERVER)
+  DB_NAME: $(DB_NAME)
+  DB_USER: $(DB_USER)
+  DB_PASSWORD: $(DB_PASSWORD)
+  API_TOKEN: $(API_TOKEN)
 
 steps:
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
+# Backend Build and Test
+- task: UseDotNet@2
   inputs:
-    restoreSolution: '$(solution)'
+    packageType: 'sdk'
+    version: '7.x' # Versie van .NET SDK
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+- script: |
+    cd backend
+    dotnet restore
+  displayName: 'Restore .NET backend dependencies'
 
-- task: VSTest@2
+- script: |
+    cd backend
+    dotnet build --configuration Release
+  displayName: 'Build .NET backend'
+
+- script: |
+    cd backend
+    dotnet test --configuration Release
+  displayName: 'Run .NET backend tests'
+
+# Frontend Build and Test
+- task: UseNode@1
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    versionSpec: '18' # Versie van Node.js
+
+- script: |
+    cd frontend
+    npm install
+  displayName: 'Install frontend dependencies'
+
+- script: |
+    cd frontend
+    npm run build --prod
+  displayName: 'Build frontend Angular project'
+
+# (Optioneel) Deployment
+- script: |
+    # Voer hier je deploy-script uit voor zowel backend als frontend
+    # Bijvoorbeeld naar een webserver of cloudservice
+  displayName: 'Deploy application'
+
+# (Optioneel) Database migrations
+- script: |
+    # Voer hier database migraties uit indien nodig
+  displayName: 'Run database migrations'
