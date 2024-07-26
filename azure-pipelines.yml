@@ -14,7 +14,7 @@ pr:
       - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   DB_SERVER: $(DB_SERVER)
@@ -28,7 +28,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '7.x' # Versie van .NET SDK
+    version: '8.x' # Versie van .NET SDK, pas dit aan indien nodig
 
 - script: |
     cd backend
@@ -46,9 +46,9 @@ steps:
   displayName: 'Run .NET backend tests'
 
 # Frontend Build and Test
-- task: UseNode@1
+- task: NodeTool@0
   inputs:
-    versionSpec: '18' # Versie van Node.js
+    versionSpec: '18.x' # Versie van Node.js, pas dit aan indien nodig
 
 - script: |
     cd frontend
@@ -57,7 +57,7 @@ steps:
 
 - script: |
     cd frontend
-    npm run build --prod
+    npm run build -- --prod
   displayName: 'Build frontend Angular project'
 
 # (Optioneel) Deployment
