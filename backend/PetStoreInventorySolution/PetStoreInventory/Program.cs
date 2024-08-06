@@ -1,7 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using PetStoreInventory.Data;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://www.petsstore.somee.com",
+                               "https://www.petsstore.somee.com",                               
+                               "http://localhost:4200");
+        });
+});
 
 // Add services to the container.
 
@@ -14,6 +26,7 @@ builder.Services.AddDbContext<PetStoreContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
 var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -21,17 +34,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseCors(options =>
-    options.WithOrigins("http://localhost:4200")
-.AllowAnyMethod()
-.AllowAnyHeader()
-);
-
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthorization();
-
 app.MapControllers();
+
+
+// Ensure this is at the end of the pipeline
+app.MapFallbackToFile("index.html");
 
 app.Run();

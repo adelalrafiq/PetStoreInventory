@@ -77,8 +77,8 @@ namespace PetStoreInventory.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<PetDetails>> PostPetDetails(PetDetails petDetails)
-        {
-            _context.PetStore.Add(petDetails);
+        {            
+            _context.PetStore.Add(petDetails);            
             try
             {
                 await _context.SaveChangesAsync();
@@ -113,6 +113,74 @@ namespace PetStoreInventory.Controllers
 
             return NoContent();
         }
+
+        // POST: api/PetDetails/seed
+        [HttpPost("seed")]
+        public async Task<IActionResult> SeedData(PetDetails petDetails)
+        {
+            Console.WriteLine("SeedData endpoint aangeroepen");
+            var random = new Random();
+
+            for (int i = 0; i < 10; i++)
+            {
+                petDetails = new PetDetails
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Naam = $"Naam{i}",
+                    Diersoort = i % 2 == 0 ? "Hond" : "Kat",
+                    Leeftijd = random.Next(1, 15),
+                    Prijs = (decimal)(random.NextDouble() * 500),
+                    Geslacht = random.Next(0, 2) == 0 ? "Mannelijk" : "Vrouwelijk",
+                    Locatie = $"Locatie{i}",
+                    Ras = i % 2 == 0 ? "Labrador" : "Siamese",
+                    Kleur = i % 2 == 0 ? "Bruin" : "Wit",
+                    Gewicht = (decimal)(random.NextDouble() * 10),
+                    Vaccinatiestatus = "Geënt",
+                    Chipnummer = random.Next(100000000, 999999999).ToString(),
+                    Gezondheidsstatus = "Gezond",
+                    Voeding = "Premium voer",
+                    Gedrag = "Vriendelijk",
+                    DatumVanBinnenkomst = DateTime.Now.AddDays(-random.Next(1, 365)),
+                    Verkoopstatus = i % 2 == 0 ? "Beschikbaar" : "Verkocht",
+                    Contactpersoon = $"Contactpersoon{i}",
+                    Beschrijving = $"Beschrijving van Pet {i}. Dit is een voorbeeld van een dier."
+                };
+
+                _context.PetStore.Add(petDetails);
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok("Data succesvol toegevoegd!");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Er is een fout opgetreden: {ex.Message}");
+            }
+        }
+
+        // DELETE: api/PetDetails/seed
+        [HttpDelete("seed")]
+        public async Task<IActionResult> DeleteAllSeedData()
+        {
+            // Verkrijg alle records uit de PetStore tabel
+            var allPets = await _context.PetStore.ToListAsync();
+
+            // Verwijder alle records
+            _context.PetStore.RemoveRange(allPets);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok("Alle seed data succesvol verwijderd!");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Er is een fout opgetreden: {ex.Message}");
+            }
+        }
+
 
         private bool PetDetailsExists(string id)
         {
