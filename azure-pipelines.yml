@@ -1,0 +1,72 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  DB_SERVER: $(DB_SERVER)
+  DB_NAME: $(DB_NAME)
+  DB_USER: $(DB_USER)
+  DB_PASSWORD: $(DB_PASSWORD)
+  API_TOKEN: $(API_TOKEN)
+
+steps:
+# Backend Build and Test
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.x' # Versie van .NET SDK, pas dit aan indien nodig
+
+- script: |
+    cd backend
+    dotnet restore
+  displayName: 'Restore .NET backend dependencies'
+
+- script: |
+    cd backend
+    dotnet build --configuration Release
+  displayName: 'Build .NET backend'
+
+- script: |
+    cd backend
+    dotnet test --configuration Release
+  displayName: 'Run .NET backend tests'
+
+# Frontend Build and Test
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x' # Versie van Node.js, pas dit aan indien nodig
+
+- script: |
+    cd frontend
+    npm install
+  displayName: 'Install frontend dependencies'
+
+- script: |
+    cd frontend
+    npm run build -- --prod
+  displayName: 'Build frontend Angular project'
+
+# (Optioneel) Deployment
+- script: |
+    # Voer hier je deploy-script uit voor zowel backend als frontend
+    # Bijvoorbeeld naar een webserver of cloudservice
+  displayName: 'Deploy application'
+
+# (Optioneel) Database migrations
+- script: |
+    # Voer hier database migraties uit indien nodig
+  displayName: 'Run database migrations'
