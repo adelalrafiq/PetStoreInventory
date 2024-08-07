@@ -1,3 +1,3 @@
 export const environment = {
-    apiBaseUrl: 'https://www.petsstore.somee.com/api/PetDetails'
+    apiBaseUrl: 'https://www.petstoreinventory.somee.com/api/PetDetails'
 };

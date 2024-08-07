@@ -9,8 +9,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://www.petsstore.somee.com",
-                               "https://www.petsstore.somee.com",                               
+            policy.WithOrigins("https://www.petstoreinventory.somee.com",                               
                                "http://localhost:4200");
         });
 });
