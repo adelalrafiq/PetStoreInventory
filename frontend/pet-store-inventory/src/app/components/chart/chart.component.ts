@@ -31,7 +31,7 @@ export class ChartComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.petService.filteredListUpdated.subscribe(pets => {
+    this.petService.filteredList$.subscribe(pets => {
       this.pets = pets
       this.loadChartData();
     })
@@ -45,7 +45,7 @@ export class ChartComponent implements OnInit {
         series: []
       };
       if (this.chart) {
-        this.chart?.update(this.chartOptions, true, true);
+        this.chart.update(this.chartOptions, true, true);
       } else {
         this.chart = Highcharts.chart('container', this.chartOptions);
       }
